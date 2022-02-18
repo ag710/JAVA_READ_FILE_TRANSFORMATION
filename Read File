@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+  
+public class Main {
+    final static String filePath
+        = "/home/knoldus/Desktop/TestFile.txt";
+    public static void main(String[] args)
+    {
+  
+        Map<String, String> fileMap = HashMapFromTextFile();
+        for (Map.Entry<String, String> entry :fileMap.entrySet()) {
+            System.out.println(entry.getKey() + " : "
+                               + entry.getValue());
+        }
+    }
+  
+    public static Map<String, String> HashMapFromTextFile()
+    {
+  
+        Map<String, String> map= new HashMap<String, String>();
+        BufferedReader br = null;
+  
+        try {
+  
+            File file = new File(filePath);
+            br = new BufferedReader(new FileReader(file));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+  
+                
+                String[] parts = line.split(":");
+                String name = parts[0].trim();
+                String number = parts[1].trim();
+                
+                if (!name.equals("") && !number.equals(""))
+                    map.put(name, number);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+  
+            if (br != null) {
+                try {
+                    br.close();
+                }
+                catch (Exception e) {
+                };
+            }
+        }
+  
+        return map;
+    }
+}
